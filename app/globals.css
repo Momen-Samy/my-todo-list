@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  background-color: #191b1f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.Main-Box {
+  text-align: center;
+}
