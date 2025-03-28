@@ -1,6 +1,6 @@
 "use client";
 import TodoList from "./components/ToDoList";
-import { TodoProvider } from "@/app/Contexts/TodoContext";
+import { TodoProvider } from "./Contexts/TodoContext";
 import { ToastProvider } from "./Contexts/ToastContext";
 
 export default function Home() {
