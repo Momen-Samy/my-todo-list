@@ -29,12 +29,11 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
-  
-    "compilerOptions": {
-      "paths": {
-        "@/*": ["./src/*"]
-      }
+  "compilerOptions": {
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
     }
-  
-  
+  }
 }
