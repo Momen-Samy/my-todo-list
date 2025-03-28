@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 
 import { useToast } from "@/app/Contexts/ToastContext";
-import { useDialog, useTodo } from "@/app/Contexts/TodoContext";
+import { useDialog, useTodo } from "../Contexts/TodoContext";
 
 export default function DeleteDilaog() {
   const { processType, dispatchProcessType } = useDialog();
