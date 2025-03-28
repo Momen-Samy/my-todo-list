@@ -1,5 +1,5 @@
+import MySnakeBar from "@/app/components/MySnakeBar";
 import { createContext, useState, useContext } from "react";
-import MySnakeBar from "../components/MySnakeBar";
 
 type ToastProp = {
   showHideToast: (message: string) => void;
