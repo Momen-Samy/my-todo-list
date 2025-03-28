@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { TodoType, Action } from "@/app/Contexts/TodoContext";
+import { TodoType, Action } from "../Contexts/TodoContext";
 
 export function TodosReducer(
   currentTodos: TodoType[],

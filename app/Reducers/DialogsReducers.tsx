@@ -1,4 +1,4 @@
-import { Alert, Action } from "@/app/Contexts/TodoContext";
+import { Alert, Action } from "../Contexts/TodoContext";
 
 export function DialogsReducers(
   currentState: Alert,

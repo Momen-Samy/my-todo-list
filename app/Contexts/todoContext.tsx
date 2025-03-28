@@ -6,8 +6,8 @@ import {
   Dispatch,
 } from "react";
 
-import { TodosReducer } from "@/app/Reducers/TodosReducer";
-import { DialogsReducers } from "@/app/Reducers/DialogsReducers";
+import { TodosReducer } from "../Reducers/TodosReducer";
+import { DialogsReducers } from "../Reducers/DialogsReducers";
 
 export type TodoType = {
   id: string;
