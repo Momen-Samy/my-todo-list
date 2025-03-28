@@ -7,8 +7,8 @@ import {
   TextField,
 } from "@mui/material";
 
-import { useToast } from "@/app/Contexts/ToastContext";
-import { useDialog, useTodo } from "../Contexts/TodoContext";
+import { useToast } from "@/Contexts/ToastContext";
+import { useDialog, useTodo } from "@/Contexts/TodoContext";
 import { useEffect, useState } from "react";
 
 export default function UpdateDialog() {

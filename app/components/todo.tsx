@@ -4,8 +4,8 @@ import Grid from "@mui/material/Grid2";
 import CheckIcon from "@mui/icons-material/Check";
 import ModeEditOutlinedIcon from "@mui/icons-material/ModeEditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import { useTodo, useDialog, TodoType } from "../Contexts/TodoContext";
-import { useToast } from "../Contexts/ToastContext";
+import { useTodo, useDialog, TodoType } from "@/Contexts/TodoContext";
+import { useToast } from "@/Contexts/ToastContext";
 
 type TodoProps = {
   todo: TodoType;
