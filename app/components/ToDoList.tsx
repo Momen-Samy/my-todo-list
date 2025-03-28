@@ -10,121 +10,113 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-
+import { v4 as uuidv4 } from "uuid";
 import Grid from "@mui/material/Grid2";
 import Todo from "./todo";
-import { useState, useMemo } from "react";
-import DeleteDilaog from "./DeleteDilaog";
-import { useToast } from "@/Contexts/ToastContext";
-import { useTodo } from "@/Contexts/TodoContext";
-import UpdateDialog from "./UpdateDialog";
+import { todosContext } from "@/app/Contexts/todoContext";
+import { useState, useContext, useEffect } from "react";
 
 export default function TodoList() {
   const [titleInput, setTitleInput] = useState("");
+  const { todos, setTodos } = useContext(todosContext);
   const [typeOfTodos, setTypeOfTodos] = useState("all");
-  const { showHideToast } = useToast();
-  const { todos, dispatch } = useTodo();
 
-  // Add New Todo
+  useEffect(() => {
+    const storageTodosData = JSON.parse(localStorage.getItem("todos") || "[]");
+    setTodos(storageTodosData);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   function handleAddClick() {
-    if (titleInput) {
-      dispatch({ type: "addNewTodo", payLoad: { titleInput } });
-      setTitleInput("");
-      showHideToast("The task has been added successfully.");
-    }
+    const newTodo = {
+      id: uuidv4(),
+      title: titleInput,
+      description: "",
+      isCompleted: false,
+    };
+    const newTodos = [...todos, newTodo];
+    setTodos(newTodos);
+    localStorage.setItem("todos", JSON.stringify(newTodos));
+    setTitleInput("");
   }
 
-  // Show Todos
-  const completedTodos = useMemo(() => {
-    return todos.filter((todo) => todo.isCompleted);
-  }, [todos]);
-
-  const unCompletedTodos = useMemo(() => {
-    return todos.filter((todo) => !todo.isCompleted);
-  }, [todos]);
-
-  const todosToBeRendered =
-    typeOfTodos === "completed"
-      ? completedTodos
-      : typeOfTodos === "uncompleted"
-      ? unCompletedTodos
-      : todos;
+  const completedTask = todos.filter((todo) => todo.isCompleted);
+  const unCompletedTask = todos.filter((todo) => !todo.isCompleted);
+  let todosToBeRendered = todos;
+  if (typeOfTodos === "completed") {
+    todosToBeRendered = completedTask;
+  } else if (typeOfTodos === "uncompleted") {
+    todosToBeRendered = unCompletedTask;
+  }
 
   return (
-    <>
-      <DeleteDilaog />
-      <UpdateDialog />
-      <Container maxWidth="sm">
-        <Card
-          sx={{
-            wordBreak: "break-word",
-            maxHeight: "80vh",
-            overflowY: "scroll",
-          }}
-        >
-          <CardContent>
-            <Typography gutterBottom variant="h2" sx={{ textAlign: "center" }}>
-              To Do List
-            </Typography>
-            <Divider sx={{ mt: "-36px" }} />
-            <ToggleButtonGroup
-              sx={{
-                mt: "30px",
-                mx: "auto",
-                width: "fit-content",
-                display: "block",
-              }}
-              color="secondary"
-              value={typeOfTodos}
-              exclusive
-              onChange={(event, newAlignment) => {
-                if (newAlignment !== null) {
-                  setTypeOfTodos(newAlignment);
-                }
-              }}
-            >
-              <ToggleButton value="all">all</ToggleButton>
-              <ToggleButton value="completed">completed</ToggleButton>
-              <ToggleButton value="uncompleted">uncompleted</ToggleButton>
-            </ToggleButtonGroup>
-
-            {/* Start Show Todos List */}
-            {todosToBeRendered.map((todo) => (
-              <Todo key={todo.id} todo={todo} />
-            ))}
-            {/* End Show Todos List */}
-          </CardContent>
-          <Grid
-            container
-            spacing={1}
-            sx={{ my: "20px" }}
-            padding={1}
-            alignItems={"center"}
+    <Container maxWidth="sm">
+      <Card
+        sx={{
+          minWidth: "500px",
+          wordBreak: "break-word",
+          maxHeight: "80vh",
+          overflowY: "scroll",
+        }}
+      >
+        <CardContent>
+          <Typography gutterBottom variant="h2">
+            To Do List
+          </Typography>
+          <Divider sx={{ mt: "-36px" }} />
+          <ToggleButtonGroup
+            sx={{ mt: "30px" }}
+            color="secondary"
+            value={typeOfTodos}
+            exclusive
+            onChange={(event, newAlignment) => {
+              if (newAlignment !== null) {
+                setTypeOfTodos(newAlignment);
+              }
+            }}
           >
-            <Grid size={3}>
-              <Button
-                onClick={handleAddClick}
-                variant="contained"
-                fullWidth
-                size="medium"
-                sx={{ bgcolor: "#f44336", color: "white", height: "52px" }}
-              >
-                Add
-              </Button>
-            </Grid>
-            <Grid size={9}>
-              <TextField
-                value={titleInput}
-                onChange={(event) => setTitleInput(event.target.value)}
-                id="outlined-basic"
-                label="Task Title"
-                variant="outlined"
-                fullWidth
-              />
-            </Grid>
+            <ToggleButton value="all">all</ToggleButton>
+            <ToggleButton value="completed">completed</ToggleButton>
+            <ToggleButton value="uncompleted">uncompleted</ToggleButton>
+          </ToggleButtonGroup>
+
+          {/* Start Show Todos List */}
+          {todosToBeRendered.map((todo) => (
+            <Todo key={todo.id} todo={todo} />
+          ))}
+          {/* End Show Todos List */}
+        </CardContent>
+        <Grid
+          container
+          spacing={1}
+          sx={{ my: "20px" }}
+          padding={1}
+          alignItems={"center"}
+        >
+          <Grid size={3}>
+            <Button
+              onClick={handleAddClick}
+              variant="contained"
+              fullWidth
+              size="medium"
+              sx={{ bgcolor: "#f44336", color: "white", height: "52px" }}
+            >
+              Add
+            </Button>
           </Grid>
-        </Card>
-      </Container>
-    </>
+          <Grid size={9}>
+            <TextField
+              value={titleInput}
+              onChange={(event) => setTitleInput(event.target.value)}
+              id="outlined-basic"
+              label="Task Title"
+              variant="outlined"
+              fullWidth
+            />
+          </Grid>
+        </Grid>
+      </Card>
+    </Container>
   );
 }

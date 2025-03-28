@@ -6,15 +6,6 @@ body {
   align-items: center;
   height: 100vh;
 }
-@media (max-width: 400px) {
-  .container-of-card-at-Mobile {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
-  }
-  .buttons-in-card {
-    margin-left: 50%;
-    gap: 5px;
-  }
+.Main-Box {
+  text-align: center;
 }
